@@ -3,19 +3,8 @@
     public class UpdateIngredientDto
     {
         public string? Name { get; set; }
+        public bool? IsUncountable { get; set; }
         public double? Price { get; set; }
-        private string? unit;
-        public string? Unit
-        {
-            get { return unit; }
-            set
-            {
-                if (value != "sztuki" || value != "ml")
-                    unit = "ml";
-                else
-                    unit = value;
-            }
-        }
-        
+
     }
 }
