@@ -8,6 +8,7 @@ namespace recipes_project_api.Contexts
         public Context(DbContextOptions<Context> options) : base(options) { }
 
         public DbSet<Ingredient> Ingredients { get; set; } // Nazwa właściwości odpowiada nazwie tabeli w bazie
-
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<IngredientAmount> IngredientAmounts { get; set; }
     }
 }
