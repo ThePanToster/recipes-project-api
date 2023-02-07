@@ -2,8 +2,7 @@
 {
     public class CreateIngredientAmountDto
     {
-        public Ingredient Ingredient { get; set; } = new Ingredient();
+        public Guid IngredientId { get; set; } = Guid.Empty;
         public int Amount { get; set; } = 0;
-        public Recipe? Recipe { get; set; } = new Recipe();
     }
 }

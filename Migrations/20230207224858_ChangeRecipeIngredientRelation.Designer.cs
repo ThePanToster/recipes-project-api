@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using recipes_project_api.Contexts;
@@ -11,9 +12,11 @@ using recipes_project_api.Contexts;
 namespace recipesprojectapi.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230207224858_ChangeRecipeIngredientRelation")]
+    partial class ChangeRecipeIngredientRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,6 +64,8 @@ namespace recipesprojectapi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IngredientId");
+
                     b.HasIndex("RecipeId");
 
                     b.ToTable("IngredientAmounts");
@@ -88,9 +93,17 @@ namespace recipesprojectapi.Migrations
 
             modelBuilder.Entity("recipes_project_api.Models.IngredientAmount", b =>
                 {
+                    b.HasOne("recipes_project_api.Models.Ingredient", "Ingredient")
+                        .WithMany()
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("recipes_project_api.Models.Recipe", null)
                         .WithMany("IngredientAmount")
                         .HasForeignKey("RecipeId");
+
+                    b.Navigation("Ingredient");
                 });
 
             modelBuilder.Entity("recipes_project_api.Models.Recipe", b =>

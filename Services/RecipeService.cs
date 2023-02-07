@@ -23,10 +23,10 @@ namespace recipes_project_api.Services
 
             return recipe;
         }
-        public async Task<IngredientAmount> GetRecipeIngredients(Guid recipeId)
+        public async Task<List<IngredientAmount>> GetRecipeIngredients(Guid recipeId)
         {
             var recipe = await GetById(recipeId);
-            return (IngredientAmount)recipe.IngredientAmount;
+            return recipe.IngredientAmount;
         }
         public async Task<Recipe> Create(CreateRecipeDto dto)
         {
