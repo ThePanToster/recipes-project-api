@@ -6,8 +6,8 @@ namespace recipes_project_api.Models
     {
         [Required]
         public Guid Id { get; set; }
-        [Required]
-        public Guid IngredientId { get; set; } = Guid.Empty;
+        [MaxLength(38)]
+        public string IngredientId { get; set; } = String.Empty;
         public int Amount { get; set; } = 0;
     }
 }

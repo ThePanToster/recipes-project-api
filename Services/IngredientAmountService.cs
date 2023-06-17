@@ -41,7 +41,7 @@ namespace recipes_project_api.Services
                 throw new Exception("You must update at least one property.");
 
             if (dto.IngredientId != null)
-                ingredientAmount.IngredientId = (Guid)dto.IngredientId;
+                ingredientAmount.IngredientId = dto.IngredientId;
 
             if (dto.Amount != null)
                 ingredientAmount.Amount = (int)dto.Amount;

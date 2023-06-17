@@ -2,7 +2,7 @@
 {
     public class UpdateIngredientAmountDto
     {
-        public Guid? IngredientId { get; set; }
+        public string? IngredientId { get; set; }
         public int? Amount { get; set; }
     }
 }

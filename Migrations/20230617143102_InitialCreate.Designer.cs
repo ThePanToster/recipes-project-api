@@ -13,8 +13,8 @@ using recipes_project_api.Contexts;
 namespace recipesprojectapi.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230529215056_RecipesRework")]
-    partial class RecipesRework
+    [Migration("20230617143102_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,8 +57,10 @@ namespace recipesprojectapi.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("IngredientId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("IngredientId")
+                        .IsRequired()
+                        .HasMaxLength(38)
+                        .HasColumnType("character varying(38)");
 
                     b.HasKey("Id");
 

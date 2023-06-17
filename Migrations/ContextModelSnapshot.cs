@@ -54,8 +54,10 @@ namespace recipesprojectapi.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("IngredientId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("IngredientId")
+                        .IsRequired()
+                        .HasMaxLength(38)
+                        .HasColumnType("character varying(38)");
 
                     b.HasKey("Id");
 

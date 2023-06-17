@@ -2,7 +2,7 @@
 {
     public class CreateIngredientAmountDto
     {
-        public Guid IngredientId { get; set; } = Guid.Empty;
+        public string IngredientId { get; set; } = String.Empty;
         public int Amount { get; set; } = 0;
     }
 }
