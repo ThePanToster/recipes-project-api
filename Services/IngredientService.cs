@@ -29,7 +29,7 @@ namespace recipes_project_api.Services
             var ingredient = new Ingredient
             {
                 Name = dto.Name,
-                Unit = dto.Unit,
+                IsUncountable = dto.IsUncountable,
                 Price = dto.Price,
             };
 
@@ -44,14 +44,14 @@ namespace recipes_project_api.Services
             if (ingredient == null)
                 throw new Exception("Ingredient not found");
 
-            if (dto.Name == null && dto.Unit == null && dto.Price == null)
+            if (dto.Name == null && dto.IsUncountable == null && dto.Price == null)
                 throw new Exception("You must update at least one property.");
 
             if (dto.Name != null)
                 ingredient.Name = dto.Name;
 
-            if (dto.Unit != null)
-                ingredient.Unit = dto.Unit;
+            if (dto.IsUncountable != null)
+                ingredient.IsUncountable = (bool)dto.IsUncountable;
 
             if (dto.Price != null)
                 ingredient.Price = (double)dto.Price;

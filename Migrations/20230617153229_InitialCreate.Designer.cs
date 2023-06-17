@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using recipes_project_api.Contexts;
@@ -11,9 +12,11 @@ using recipes_project_api.Contexts;
 namespace recipesprojectapi.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230617153229_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,14 +60,14 @@ namespace recipesprojectapi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("RecipeId")
+                    b.Property<Guid?>("RecipeId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("IngredientAmounts");
+                    b.ToTable("IngredientAmount");
                 });
 
             modelBuilder.Entity("recipes_project_api.Models.Recipe", b =>
@@ -91,9 +94,7 @@ namespace recipesprojectapi.Migrations
                 {
                     b.HasOne("recipes_project_api.Models.Recipe", null)
                         .WithMany("IngredientList")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RecipeId");
                 });
 
             modelBuilder.Entity("recipes_project_api.Models.Recipe", b =>
