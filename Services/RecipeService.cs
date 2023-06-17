@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using recipes_project_api.Models;
+using System.Linq;
 
 namespace recipes_project_api.Services
 {
@@ -10,31 +11,41 @@ namespace recipes_project_api.Services
         {
             _context = context;
         }
+        public async Task<List<IngredientAmount>> GetRecipeIngredients(Guid recipeId)
+        {
+            return _context.IngredientAmounts
+                .Where(x => x.RecipeId == recipeId)
+                .ToList();
+        }
 
         public async Task<List<Recipe>> GetRecipes()
         {
-            return await _context.Recipes.ToListAsync();
+            var recipeList = await _context.Recipes.ToListAsync();
+
+            recipeList.ForEach(async x => x.IngredientList = await GetRecipeIngredients(x.Id));
+
+            return recipeList;
         }
+
         public async Task<Recipe> GetById(Guid recipeId)
         {
             var recipe = await _context.Recipes.SingleOrDefaultAsync(x => x.Id == recipeId);
+
             if (recipe == null)
                 throw new Exception("Recipe not found");
+            else
+                recipe.IngredientList = await GetRecipeIngredients(recipeId);
 
             return recipe;
         }
-        public async Task<List<Guid>> GetRecipeIngredients(Guid recipeId)
-        {
-            var recipe = await GetById(recipeId);
-            return recipe.IngredientAmount;
-        }
+
         public async Task<Recipe> Create(CreateRecipeDto dto)
         {
             var recipe = new Recipe
             {
                 Name = dto.Name,
                 Description = dto.Description,
-                IngredientAmount = dto.IngredientAmount,
+                IngredientList = dto.IngredientList,
             };
 
             _context.Recipes.Add(recipe);
@@ -48,7 +59,7 @@ namespace recipes_project_api.Services
             if (recipe == null)
                 throw new Exception("Recipe not found");
 
-            if (dto.Name == null && dto.Description == null && dto.IngredientAmount == null)
+            if (dto.Name == null && dto.Description == null && dto.IngredientList == null)
                 throw new Exception("You must update at least one property.");
 
             if (dto.Name != null)
@@ -57,8 +68,8 @@ namespace recipes_project_api.Services
             if (dto.Description != null)
                 recipe.Description = dto.Description;
 
-            if (dto.IngredientAmount != null)
-                recipe.IngredientAmount = dto.IngredientAmount;
+            if (dto.IngredientList != null)
+                recipe.IngredientList = dto.IngredientList;
 
             await _context.SaveChangesAsync();
 

@@ -4,6 +4,6 @@
     {
         public string Name { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
-        public List<Guid> IngredientAmount { get; set; } = new List<Guid>();
+        public List<IngredientAmount> IngredientList { get; set; } = new List<IngredientAmount>();
     }
 }

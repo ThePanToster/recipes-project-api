@@ -4,6 +4,6 @@
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public List<Guid>? IngredientAmount { get; set; }
+        public List<IngredientAmount>? IngredientList { get; set; }
     }
 }
